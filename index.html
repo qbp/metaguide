@@ -1,0 +1,529 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.4.4" />
+<title>Meta Guide: Media File Hierarchy Guidelines</title>
+<style type="text/css">
+/* Debug borders */
+p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
+/*
+  border: 1px solid red;
+*/
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+tt {
+  color: navy;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  font-family: sans-serif;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+
+div.sectionbody {
+  font-family: serif;
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+span#author {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+span#email {
+}
+span#revision {
+  font-family: sans-serif;
+}
+
+div#footer {
+  font-family: sans-serif;
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+div#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+div#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+div#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock {
+  padding-left: 2.0em;
+  margin-right: 10%;
+}
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock {
+  padding-left: 2.0em;
+  margin-right: 10%;
+}
+div.verseblock > div.content {
+  white-space: pre;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 2px solid silver;
+}
+
+div.exampleblock > div.content {
+  border-left: 2px solid silver;
+  padding: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+div.imageblock img { border: 1px solid silver; }
+span.image img { border-style: none; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+@media print {
+  div#footer-badges { display: none; }
+}
+
+div#toctitle {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+/* Workarounds for IE6's broken and incomplete CSS2. */
+
+div.sidebar-content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+div.sidebar-title, div.image-title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.5em;
+}
+
+div.listingblock div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock-attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock-content {
+  white-space: pre;
+}
+div.verseblock-attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+
+div.exampleblock-content {
+  border-left: 2px solid silver;
+  padding-left: 0.5em;
+}
+
+/* IE6 sets dynamically generated links as visited. */
+div#toc a:visited { color: blue; }
+</style>
+</head>
+<body>
+<div id="header">
+<h1>Meta Guide: Media File Hierarchy Guidelines</h1>
+<span id="author">The Synchronization Council</span><br />
+<span id="revision">version 7,</span>
+Sep 2009
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>This document presents guidelines on naming media files in the filesystem with respect to their meta-data.</p></div>
+</div>
+</div>
+<h2 id="_general">General</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Filenames are UTF-8 encoded.
+There are namespaces for different media types.
+The "Audio" and "Video" namespaces are described in this document.
+Further namespaces for "Text" and other media are not yet decided upon.</p></div>
+</div>
+<h2 id="_audio">Audio</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Audio files are stored in compressed format.
+Either lossless (<em>flac</em>) or lossy (<em>ogg</em> and <em>mp3</em>).
+Other formats are discouraged and should be rerecorded or reencoded.</p></div>
+<div class="paragraph"><p>The filename of an audio file is derived from its meta-data.
+For <em>flac</em> and <em>ogg</em> files the meta-data is stored in a "vorbis comment" <a href="#vorbiscomment">[vorbiscomment]</a>.
+For <em>mp3</em> the meta-data is stored in ID3v2 tags <a href="#id3">[id3]</a>.
+The meta-data is formatted according to the <em>Official MusicBrainz Style Guidelines</em> <a href="#musicbrainzstyle">[musicbrainzstyle]</a>.</p></div>
+<div class="paragraph"><p>For compatibility reasons some special characters can not be included in the filename.
+A "/" in the meta-data is replaced with "-" in the filename.</p></div>
+<div class="paragraph"><p>For CDs, a <strong>release</strong> represents 1 CD.
+For vinyl and cassettes, a <strong>release</strong> represents <em>both</em> sides of the record or cassette.</p></div>
+<h3 id="_regular_releases">Regular Releases</h3><div style="clear:left"></div>
+<div class="paragraph"><p>A <strong>Regular Release</strong> has one <strong>Artist</strong>.
+Either a <strong>Regular Release</strong> has all tracks performed by the same <strong>Artist</strong> or at least a main artist that delivers a substantial performance.
+Generally, this <strong>Artist</strong> is featured prominently on the <strong>Release</strong> sleeve.</p></div>
+<div class="paragraph"><p>An <strong>Artist</strong> has a <strong>ArtistName</strong> and a <strong>ArtistSortName</strong> according to the <em>MusicBrainz Sortname Style</em> <a href="#sortnamestyle">[sortnamestyle]</a>.</p></div>
+<div class="paragraph"><p><strong>ArtistFirstLetter</strong> is the lowercase first letter of the <strong>ArtistSortName</strong>.
+If the first letter of the <strong>ArtistSortName</strong> is a digit <strong>ArtistFirstLetter</strong> is the string "0-9".</p></div>
+<div class="paragraph"><p><strong>ReleaseYear</strong> is the four digit year in that the <strong>release</strong> was published.</p></div>
+<div class="paragraph"><p><strong>TrackNumber</strong> is a two digit number. For tracknumbers below 10 the prefix is "0".</p></div>
+<div class="paragraph"><p>Path := "/audio/" ArtistFirstLetter "/" ArtistSortName "/(" ReleaseYear ")" Release "/" TrackNumber "-" ArtistName " - " TrackName "." FileExtension ;</p></div>
+<div class="exampleblock">
+<div class="exampleblock-content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>/audio/0-9/2raumwohnung/(2004) Es Wird Morgen/12-2raumwohnung - Zentralmassiv.mp3
+/audio/a/Apollo 440/(1999)Electro Glide In Blue/01-Apollo 440 - Stealth Overture.mp3
+/audio/b/Beatles, The/(2000)One/01-The Beatles - Love me do.mp3</tt></pre>
+</div></div>
+</div></div>
+<h3 id="_audio_books">Audio Books</h3><div style="clear:left"></div>
+<div class="paragraph"><p><strong>Episode</strong> can be either a Chapter in the Book or Episode in a Season.</p></div>
+<div class="paragraph"><p>Path := "/audio/_books/" AuthorSortName "/" TitleSortName "/" EpisodeNumber "-" Author " - " Title [ ": " EpisodeTitle ] "." FileExtension ;</p></div>
+<div class="exampleblock">
+<div class="exampleblock-content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>/audio/_books/Adams, Douglas/Raumschiff Titanic/01-Douglas Adams - Raumschiff Titanic.mp3
+/audio/_books/Blyton, Enid/5 Freunde, Die/02-Enid Blyton - Die 5 Freunde: Auf der Felseninsel.ogg</tt></pre>
+</div></div>
+</div></div>
+<h3 id="_radio_broadcast_recordings">Radio Broadcast Recordings</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Path := "/audio/_radio/" Station "/" Show "/" AirDate [ " " Title ] "." FileExtension ;
+AirDate := Year [ "-" Month "-" Day ] ;</p></div>
+<div class="exampleblock">
+<div class="exampleblock-content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>/audio/_radio/BBC Radio 1/Breezeblock/2001-11-12 Avalanches.mp3
+/audio/_radio/FM4/Tribe Vibes/2006-07-20.ogg</tt></pre>
+</div></div>
+</div></div>
+<h3 id="_soundtracks">Soundtracks</h3><div style="clear:left"></div>
+<div class="paragraph"><p><strong>SoundtrackTitle</strong> accodring to Soundtrack Title Style <a href="#oststyle">[oststyle]</a>.</p></div>
+<div class="paragraph"><p>Path := "/audio/_soundtracks/(" ReleaseYear ")" SoundtrackTitle "/" TrackNumber "-" ArtistName " - " TrackName "." FileExtension ;</p></div>
+<div class="exampleblock">
+<div class="exampleblock-content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>/audio/_soundtracks/(1996) Mission - Impossible/03-Pulp - I Spy.mp3
+/audio/_soundtracks/(2008) Slumdog Millionaire/05-M.I.A. - Paper Planes (DFA remix).mp3</tt></pre>
+</div></div>
+</div></div>
+<h3 id="_various_artist_releases_compilations">Various Artist Releases / Compilations</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Path := "/audio/_va/(" ReleaseYear ")" CompilationTitle "/" TrackNumber "-" ArtistName " - " TrackName "." FileExtension ;</p></div>
+<div class="exampleblock">
+<div class="exampleblock-content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>/audio/_va/(2004) El Disco De Reggaeton/04-Aldo Ranks - Mueve Mami.mp3
+/audio/_va/(2005) FabricLive 24: Diplo/09-Aphex Twin - Windowlicker.mp3</tt></pre>
+</div></div>
+</div></div>
+</div>
+<h2 id="_video">Video</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>&#8230;to be done&#8230;</p></div>
+<div class="exampleblock">
+<div class="exampleblock-content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>/video/series/Dexter/Season 1/Dexter S01E03 - Popping Cherry.avi
+/video/movies/Dune (1984) [en]/Dune.avi</tt></pre>
+</div></div>
+</div></div>
+</div>
+<h2 id="_bibliography">Bibliography</h2>
+<div class="sectionbody">
+<div class="ulist bibliography"><ul>
+<li>
+<p>
+<a id="sortnamestyle"></a>[sortnamestyle] <a href="http://wiki.musicbrainz.org/Sortname_Style">http://wiki.musicbrainz.org/Sortname_Style</a>
+</p>
+</li>
+<li>
+<p>
+<a id="musicbrainzstyle"></a>[musicbrainzstyle] <a href="http://musicbrainz.org/doc/OfficialStyleGuideline">http://musicbrainz.org/doc/OfficialStyleGuideline</a>
+</p>
+</li>
+<li>
+<p>
+<a id="vorbiscomment"></a>[vorbiscomment] <a href="http://www.xiph.org/vorbis/doc/v-comment.html">http://www.xiph.org/vorbis/doc/v-comment.html</a>
+</p>
+</li>
+<li>
+<p>
+<a id="id3v2"></a>[id3v2] <a href="http://www.id3.org">http://www.id3.org</a>
+</p>
+</li>
+<li>
+<p>
+<a id="oststyle"></a>[oststyle] <a href="http://wiki.musicbrainz.org/Soundtrack_Title_Style">http://wiki.musicbrainz.org/Soundtrack_Title_Style</a>
+</p>
+</li>
+</ul></div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 7<br />
+Last updated 2009-09-08 12:22:15 CEST
+</div>
+</div>
+</body>
+</html>
