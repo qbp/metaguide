@@ -115,13 +115,55 @@ Path := "/audio/_va/(" ReleaseYear ")" CompilationTitle "/" TrackNumber "-" Arti
 Video
 -----
 
-...to be done...
+The video part of this document is still work in progress and under discussion.
+These are some examples of schemata in use today.
+
+describe here: formats, codecs, containers, ...
+
+
+Concerts
+~~~~~~~~
+
+===============================================================================
+ /video/concerts/(2003) Red Hot Chili Peppers - Live At Slane Castle/Disc1.avi
+ /video/concerts/(2006) Gorillaz - Demon Days Live/Gorillaz.avi
+===============================================================================
+
+
+Movies
+~~~~~~
+
+Path := "/video/movies/" MovieName " (" ReleaseYear ") [ " [" LanguageCode "]" ] "/" MovieName "." FileExtension ;
+*LanguageCode* is two character according to ISO 639-1. If the movie is available in more than one language the LanguageCode can be dropped.
+
+===============================================================================
+ /video/movies/Dune (1984) [en]/Dune.avi
+ /video/movies/Kill Bill - Vol. 1 (2003)/Kill Bill Vol.1 - CD1.mpg
+===============================================================================
+
+
+Musicvideos
+~~~~~~~~~~~
+
+===============================================================================
+ /video/musicvideos/Fischmob - Bonanzarad.mpg
+ /video/musicvideos/Mory Kante - Yeke Yeke.mpg
+===============================================================================
+
+
+TV Series
+~~~~~~~~~
+
+Path := "/video/series" SeriesName "/Season " SeasonNumber "/" SeriesName " " EpisodeIdentifier [" - "  EpisodeName] "." FileExtension ;
+EpisodeIdentifier := "S" PrefixedSeriesNumber "E" PrefixedEpisodeNumber ;
+
+*PrefixedSeriesNumber* and *PrefixedEpisodeNumber* are two digit numbers. For numbers below 10 the prefix is "0".
+
 
 ===============================================================================
  /video/series/Dexter/Season 1/Dexter S01E03 - Popping Cherry.avi
- /video/movies/Dune (1984) [en]/Dune.avi
+ /video/series/Kupetzky/Season 1/Kupetzky S01E08 - Graceland.avi
 ===============================================================================
-
 
 
 
