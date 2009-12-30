@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="generator" content="AsciiDoc 8.4.4" />
+<meta name="generator" content="AsciiDoc 8.5.1" />
 <title>Meta Guide: Media File Hierarchy Guidelines</title>
 <style type="text/css">
 /* Debug borders */
@@ -91,7 +91,7 @@ span#author {
 }
 span#email {
 }
-span#revision {
+span#revnumber, span#revdate, span#revremark {
   font-family: sans-serif;
 }
 
@@ -118,7 +118,7 @@ div#preamble {
 div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
 div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
 div.admonitionblock {
-  margin-top: 1.5em;
+  margin-top: 0.25em;
   margin-bottom: 1.5em;
 }
 div.admonitionblock {
@@ -209,8 +209,8 @@ div.exampleblock > div.content {
 }
 
 div.imageblock div.content { padding-left: 0; }
-div.imageblock img { border: 1px solid silver; }
 span.image img { border-style: none; }
+a.image:visited { color: white; }
 
 dl {
   margin-top: 0.8em;
@@ -310,6 +310,34 @@ div.hdlist.compact tr {
   background: yellow;
 }
 
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+
 @media print {
   div#footer-badges { display: none; }
 }
@@ -381,14 +409,147 @@ div.exampleblock-content {
 /* IE6 sets dynamically generated links as visited. */
 div#toc a:visited { color: blue; }
 </style>
+<script type="text/javascript">
+/*<![CDATA[*/
+window.onload = function(){asciidoc.footnotes();}
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([2-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo)
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  var cont = document.getElementById("content");
+  var noteholder = document.getElementById("footnotes");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      // Use [\s\S] in place of . so multi-line matches work.
+      // Because JavaScript has no s (dotall) regex flag.
+      note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      spans[i].innerHTML =
+        "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+        "' title='View footnote' class='footnote'>" + n + "</a>]";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+}
+
+}
+/*]]>*/
+</script>
 </head>
 <body>
 <div id="header">
 <h1>Meta Guide: Media File Hierarchy Guidelines</h1>
 <span id="author">The Synchronization Council</span><br />
-<span id="revision">version 7,</span>
-Sep 2009
+<span id="revnumber">version 8,</span>
+<span id="revdate">Dez 2009</span>
 </div>
+<div id="content">
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph"><p>This document presents guidelines on naming media files in the filesystem with respect to their meta-data.</p></div>
@@ -423,14 +584,14 @@ Generally, this <strong>Artist</strong> is featured prominently on the <strong>R
 If the first letter of the <strong>ArtistSortName</strong> is a digit <strong>ArtistFirstLetter</strong> is the string "0-9".</p></div>
 <div class="paragraph"><p><strong>ReleaseYear</strong> is the four digit year in that the <strong>release</strong> was published.</p></div>
 <div class="paragraph"><p><strong>TrackNumber</strong> is a two digit number. For tracknumbers below 10 the prefix is "0".</p></div>
-<div class="paragraph"><p>Path := "/audio/" ArtistFirstLetter "/" ArtistSortName "/(" ReleaseYear ")" Release "/" TrackNumber "-" ArtistName " - " TrackName "." FileExtension ;</p></div>
+<div class="paragraph"><p>Path := "/audio/" ArtistFirstLetter "/" ArtistSortName "/(" ReleaseYear ") " Release "/" TrackNumber "-" ArtistName " - " TrackName "." FileExtension ;</p></div>
 <div class="exampleblock">
 <div class="exampleblock-content">
 <div class="literalblock">
 <div class="content">
 <pre><tt>/audio/0-9/2raumwohnung/(2004) Es Wird Morgen/12-2raumwohnung - Zentralmassiv.mp3
-/audio/a/Apollo 440/(1999)Electro Glide In Blue/01-Apollo 440 - Stealth Overture.mp3
-/audio/b/Beatles, The/(2000)One/01-The Beatles - Love me do.mp3</tt></pre>
+/audio/a/Apollo 440/(1999) Electro Glide In Blue/01-Apollo 440 - Stealth Overture.mp3
+/audio/b/Beatles, The/(2000) One/01-The Beatles - Love me do.mp3</tt></pre>
 </div></div>
 </div></div>
 <h3 id="_audio_books">Audio Books</h3><div style="clear:left"></div>
@@ -479,13 +640,48 @@ AirDate := Year [ "-" Month "-" Day ] ;</p></div>
 </div>
 <h2 id="_video">Video</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>&#8230;to be done&#8230;</p></div>
+<div class="paragraph"><p>The video part of this document is still work in progress and under discussion.
+These are some examples of schemata in use today.</p></div>
+<div class="paragraph"><p>describe here: formats, codecs, containers, &#8230;</p></div>
+<h3 id="_concerts">Concerts</h3><div style="clear:left"></div>
 <div class="exampleblock">
 <div class="exampleblock-content">
 <div class="literalblock">
 <div class="content">
-<pre><tt>/video/series/Dexter/Season 1/Dexter S01E03 - Popping Cherry.avi
-/video/movies/Dune (1984) [en]/Dune.avi</tt></pre>
+<pre><tt>/video/concerts/(2003) Red Hot Chili Peppers - Live At Slane Castle/Disc1.avi
+/video/concerts/(2006) Gorillaz - Demon Days Live/Gorillaz.avi</tt></pre>
+</div></div>
+</div></div>
+<h3 id="_movies">Movies</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Path := "/video/movies/" MovieName " (" ReleaseYear ") [ " [" LanguageCode "]" ] "/" MovieName "." FileExtension ;
+<strong>LanguageCode</strong> is two character according to ISO 639-1. If the movie is available in more than one language the LanguageCode can be dropped.</p></div>
+<div class="exampleblock">
+<div class="exampleblock-content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>/video/movies/Dune (1984) [en]/Dune.avi
+/video/movies/Kill Bill - Vol. 1 (2003)/Kill Bill - Vol. 1 - CD1.mpg</tt></pre>
+</div></div>
+</div></div>
+<h3 id="_musicvideos">Musicvideos</h3><div style="clear:left"></div>
+<div class="exampleblock">
+<div class="exampleblock-content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>/video/musicvideos/Fischmob - Bonanzarad.mpg
+/video/musicvideos/Mory Kante - Yeke Yeke.mpg</tt></pre>
+</div></div>
+</div></div>
+<h3 id="_tv_series">TV Series</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Path := "/video/series" SeriesName "/" PrefixedSeasonNumber "/" SeriesName " " EpisodeIdentifier [" - "  EpisodeName] "." FileExtension ;
+EpisodeIdentifier := "S" PrefixedSeasonNumber "E" PrefixedEpisodeNumber ;</p></div>
+<div class="paragraph"><p><strong>PrefixedSeasonNumber</strong> and <strong>PrefixedEpisodeNumber</strong> are two digit numbers. For numbers below 10 the prefix is "0".</p></div>
+<div class="exampleblock">
+<div class="exampleblock-content">
+<div class="literalblock">
+<div class="content">
+<pre><tt>/video/series/Dexter/01/Dexter S01E03 - Popping Cherry.avi
+/video/series/Kupetzky/01/Kupetzky S01E08 - Graceland.avi</tt></pre>
 </div></div>
 </div></div>
 </div>
@@ -519,10 +715,12 @@ AirDate := Year [ "-" Month "-" Day ] ;</p></div>
 </li>
 </ul></div>
 </div>
+</div>
+<div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Version 7<br />
-Last updated 2009-09-08 12:22:15 CEST
+Version 8<br />
+Last updated 2009-12-30 17:22:45 CEST
 </div>
 </div>
 </body>
